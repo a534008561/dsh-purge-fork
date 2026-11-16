@@ -1,0 +1,37 @@
+name: 自动同步上游 dsh-purge
+
+on:
+  schedule:
+    # 每天 UTC 01:33（北京时间 09:33）自动同步
+    - cron: '33 1 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '强制同步（会用上游内容覆盖本地分叉，丢弃本 fork 的独立提交）'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 同步上游分支
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const force = '${{ inputs.force }}' === 'true';
+            core.info(`开始同步 kingcharleslzy-ai/dsh-purge -> ${context.repo.owner}/${context.repo.repo} (force=${force})`);
+            await github.rest.repos.mergeUpstream({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: 'master',
+              ...(force ? { force: true } : {}),
+            });
+            core.info('同步完成：无新增提交时该 API 会返回 204，属正常情况。');
