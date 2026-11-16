@@ -25,7 +25,7 @@
 
 用 Qwen Image 2.1 为成年虚构角色制作写真和插画，用参考图、LoRA 或蒙版调整造型。选定一张图后，用 MiniMax H3 拍成有声镜头，也可以让 Agent 按角色卡做分镜、逐镜审片，再剪成完整的成人向短片。图像和视频模型可部署在本机或自己的 GPU 服务器。
 
-[打开 DSH-Spicy 的 GitHub 仓库](https://github.com/kingcharleslzy-ai/DSH-Spicy)
+[打开 DSH-Spicy 的 GitHub 仓库](https://github.com/a534008561/DSH-Spicy)
 
 ## 它是什么
 
